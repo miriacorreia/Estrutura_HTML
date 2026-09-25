@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fundamentos de HTML</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef1f5;
+    --bg-soft:#e2e7ee;
+    --ink:#1a1d23;
+    --ink-dim:#5a616e;
+    --rule:#c7cedb;
+    --accent:#d1471f;
+    --accent-soft:#f4ded6;
+    --teal:#1f6f74;
+    --teal-soft:#d9ecec;
+    --code-bg:#1c2129;
+    --code-fg:#eef1f5;
+    --code-tag:#f28b5c;
+    --code-attr:#7fc4c9;
+    --code-str:#c7d67e;
+    --card:#ffffff;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14161c;
+      --bg-soft:#1b1e26;
+      --ink:#e9ebef;
+      --ink-dim:#9aa1b0;
+      --rule:#2c3140;
+      --accent:#ef7b52;
+      --accent-soft:#3a2620;
+      --teal:#6fc7cb;
+      --teal-soft:#1c2f30;
+      --code-bg:#0d0f14;
+      --code-fg:#e9ebef;
+      --card:#1b1e26;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14161c;
+    --bg-soft:#1b1e26;
+    --ink:#e9ebef;
+    --ink-dim:#9aa1b0;
+    --rule:#2c3140;
+    --accent:#ef7b52;
+    --accent-soft:#3a2620;
+    --teal:#6fc7cb;
+    --teal-soft:#1c2f30;
+    --code-bg:#0d0f14;
+    --code-fg:#e9ebef;
+    --card:#1b1e26;
+  }
+  html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%;}
+  *{box-sizing:border-box;}
+  body{
+    height:100%;
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:700px; margin:0 auto; padding:4rem 1.5rem 6rem;}
+  header.hero{margin-bottom:4rem;}
+  .kicker{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.85rem;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:.5em;
+    margin-bottom:1rem;
+  }
+  .kicker::before{content:"<!DOCTYPE html>";}
+  h1.title{
+    font-family:"Fraunces",serif;
+    font-weight:700;
+    font-size:clamp(2.2rem,6vw,3.4rem);
+    line-height:1.05;
+    margin:0 0 1rem;
+    letter-spacing:-0.01em;
+  }
+  .lede{
+    font-size:1.15rem;
+    color:var(--ink-dim);
+    max-width:56ch;
+    margin:0;
+  }
+  section{margin-top:4.5rem;}
+  .tagmark{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.95rem;
+    color:var(--teal);
+    background:var(--teal-soft);
+    display:inline-block;
+    padding:.15em .55em;
+    border-radius:4px;
+    margin-bottom:.9rem;
+  }
+  h2{
+    font-family:"Fraunces",serif;
+    font-weight:600;
+    font-size:1.7rem;
+    margin:0 0 1rem;
+    letter-spacing:-0.005em;
+  }
+  p{margin:0 0 1rem; max-width:65ch;}
+  .rule{border:none; border-top:1px solid var(--rule); margin:4.5rem 0 0;}
+  code.inline{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.9em;
+    background:var(--bg-soft);
+    padding:.1em .4em;
+    border-radius:4px;
+    color:var(--accent);
+  }
+  .codebox{
+    background:var(--code-bg);
+    color:var(--code-fg);
+    border-radius:10px;
+    padding:1.1rem 1.3rem;
+    margin:1.2rem 0 1.5rem;
+    overflow-x:auto;
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.88rem;
+    line-height:1.65;
+  }
+  .codebox .t{color:var(--code-tag);}
+  .codebox .a{color:var(--code-attr);}
+  .codebox .s{color:var(--code-str);}
+  .codebox .c{color:#7a8194;}
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+    margin:1.5rem 0;
+  }
+  @media (max-width:560px){ .grid{grid-template-columns:1fr;} }
+  .card{
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:10px;
+    padding:1.1rem 1.2rem;
+  }
+  .card .name{
+    font-family:"JetBrains Mono",monospace;
+    color:var(--accent);
+    font-size:0.95rem;
+    display:block;
+    margin-bottom:.4rem;
+  }
+  .card p{margin:0; font-size:0.95rem; color:var(--ink-dim);}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:1.5rem 0;
+    font-size:0.95rem;
+  }
+  th,td{
+    text-align:left;
+    padding:.7rem .6rem;
+    border-bottom:1px solid var(--rule);
+    vertical-align:top;
+  }
+  th{
+    font-family:"JetBrains Mono",monospace;
+    font-weight:500;
+    color:var(--ink-dim);
+    font-size:0.82rem;
+  }
+  td.tagname{font-family:"JetBrains Mono",monospace; color:var(--accent); white-space:nowrap;}
+  .obsolete-row td.tagname{color:var(--ink-dim); text-decoration:line-through; text-decoration-color:var(--rule);}
+  .note{
+    border-left:3px solid var(--accent);
+    background:var(--accent-soft);
+    padding:.9rem 1.1rem;
+    border-radius:0 8px 8px 0;
+    margin:1.5rem 0;
+    font-size:0.95rem;
+  }
+  footer{
+    margin-top:5rem;
+    padding-top:2rem;
+    border-top:1px solid var(--rule);
+    color:var(--ink-dim);
+    font-size:0.85rem;
+    font-family:"JetBrains Mono",monospace;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">estrutura html</div>
+    <h1 class="title">As peças que constroem toda página web</h1>
+    <p class="lede">Um guia rápido sobre tags, atributos e a diferença entre organizar conteúdo e dar significado a ele.</p>
+  </header>
+
+  <section id="tags">
+    <span class="tagmark">&lt;tags&gt;</span>
+    <h2>Um vocabulário fixo, não uma folha em branco</h2>
+    <p>O HTML trabalha com um conjunto de tags já definido e padronizado pelo W3C — não é possível inventar novas tags. Cada tag é escrita entre os sinais <code class="inline">&lt;</code> e <code class="inline">&gt;</code>, e quase todas precisam ser fechadas repetindo o nome com uma barra na frente.</p>
+    <div class="codebox">&lt;<span class="t">h1</span>&gt;Título de uma seção&lt;/<span class="t">h1</span>&gt;
+
+&lt;<span class="t">p</span>&gt;Parágrafo contendo um texto&lt;/<span class="t">p</span>&gt;</div>
+    <p>Algumas tags fogem dessa regra e se fecham sozinhas, como a quebra de linha:</p>
+    <div class="codebox">Linha um&lt;<span class="t">br</span> /&gt;
+Linha dois</div>
+    <p>As tags se dividem em três famílias, de acordo com o papel que exercem: <strong>estruturais</strong>, <strong>textuais</strong> e <strong>semânticas</strong>. As duas últimas são o foco deste guia.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="atributos">
+    <span class="tagmark">&lt;atributos&gt;</span>
+    <h2>Atributos: detalhes dentro da tag</h2>
+    <p>Um atributo acrescenta uma característica a uma tag. Ele sempre vem em pares de <em>nome</em> e <em>valor</em>, dentro da própria tag de abertura.</p>
+    <div class="codebox">&lt;<span class="t">img</span> <span class="a">src</span>=<span class="s">"imagem.jpg"</span> <span class="a">alt</span>=<span class="s">"minha imagem"</span> /&gt;</div>
+    <div class="grid">
+      <div class="card">
+        <span class="name">src</span>
+        <p>Define o endereço e o nome do arquivo de imagem a ser carregado.</p>
+      </div>
+      <div class="card">
+        <span class="name">alt</span>
+        <p>Texto alternativo, exibido caso a imagem não carregue no navegador.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="textuais">
+    <span class="tagmark">&lt;textuais&gt;</span>
+    <h2>Tags textuais: organizam o conteúdo</h2>
+    <p>Cuidam de textos, mídias e links — a matéria-prima visível de uma página.</p>
+    <table>
+      <tr><th>tag</th><th>função</th></tr>
+      <tr><td class="tagname">&lt;h1&gt;…&lt;h6&gt;</td><td>Títulos hierárquicos. Use apenas um <code class="inline">&lt;h1&gt;</code> por página; os demais níveis podem se repetir.</td></tr>
+      <tr><td class="tagname">&lt;p&gt;</td><td>Parágrafos de texto.</td></tr>
+      <tr><td class="tagname">&lt;pre&gt;</td><td>Texto pré-formatado, preservando espaços e quebras de linha.</td></tr>
+      <tr><td class="tagname">&lt;div&gt;</td><td>Agrupa conteúdo sem carregar significado semântico próprio; quebra o fluxo em bloco.</td></tr>
+      <tr><td class="tagname">&lt;span&gt;</td><td>Como a <code class="inline">&lt;div&gt;</code>, mas embutida — agrupa sem quebrar o fluxo do texto.</td></tr>
+      <tr><td class="tagname">&lt;a&gt;</td><td>Insere links.</td></tr>
+      <tr><td class="tagname">&lt;br&gt;</td><td>Quebra de linha.</td></tr>
+      <tr><td class="tagname">&lt;hr&gt;</td><td>Linha horizontal, geralmente usada para separar mudanças de assunto.</td></tr>
+    </table>
+  </section>
+
+  <hr class="rule">
+
+  <section id="semanticas">
+    <span class="tagmark">&lt;semânticas&gt;</span>
+    <h2>Tags semânticas: dão significado à estrutura</h2>
+    <p>Chegaram com o HTML5 para descrever <em>o que</em> cada bloco de conteúdo representa, não apenas como agrupá-lo.</p>
+    <div class="codebox"><span class="c">&lt;!-- uma section pode reunir vários articles --&gt;</span>
+&lt;<span class="t">section</span>&gt;
+  &lt;<span class="t">article</span>&gt;Post do blog 1&lt;/<span class="t">article</span>&gt;
+  &lt;<span class="t">article</span>&gt;Post do blog 2&lt;/<span class="t">article</span>&gt;
+&lt;/<span class="t">section</span>&gt;</div>
+    <div class="grid">
+      <div class="card">
+        <span class="name">&lt;section&gt;</span>
+        <p>Define uma seção do documento, normalmente para agrupar conteúdo relacionado.</p>
+      </div>
+      <div class="card">
+        <span class="name">&lt;article&gt;</span>
+        <p>Um bloco de conteúdo independente, como um post de blog.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="formatacao">
+    <span class="tagmark">&lt;formatação&gt;</span>
+    <h2>Negrito e itálico têm duas versões cada</h2>
+    <p>Visualmente, <code class="inline">&lt;b&gt;</code> e <code class="inline">&lt;strong&gt;</code> parecem idênticos — assim como <code class="inline">&lt;i&gt;</code> e <code class="inline">&lt;em&gt;</code>. A diferença aparece em leitores de tela, que usam a versão semântica para dar ênfase real na leitura em voz alta.</p>
+    <table>
+      <tr><th>tag</th><th>efeito</th></tr>
+      <tr><td class="tagname">&lt;b&gt;</td><td>Aplica negrito, sem carga semântica.</td></tr>
+      <tr><td class="tagname">&lt;strong&gt;</td><td>Aplica negrito e marca o trecho como importante.</td></tr>
+      <tr><td class="tagname">&lt;i&gt;</td><td>Aplica itálico, sem carga semântica.</td></tr>
+      <tr><td class="tagname">&lt;em&gt;</td><td>Aplica itálico e dá ênfase ao trecho.</td></tr>
+    </table>
+  </section>
+
+  <hr class="rule">
+
+  <section id="listas">
+    <span class="tagmark">&lt;listas&gt;</span>
+    <h2>Listas: três formas de agrupar itens</h2>
+    <p>O HTML oferece três tipos de lista. Cada uma tem uma tag "pai" (o container) e tags "filhas" (os itens).</p>
+    <table>
+      <tr><th>tipo</th><th>container</th><th>item</th><th>descrição</th></tr>
+      <tr><td>Ordenada</td><td class="tagname">&lt;ol&gt;</td><td class="tagname">&lt;li&gt;</td><td>—</td></tr>
+      <tr><td>Não ordenada</td><td class="tagname">&lt;ul&gt;</td><td class="tagname">&lt;li&gt;</td><td>—</td></tr>
+      <tr><td>Definição</td><td class="tagname">&lt;dl&gt;</td><td class="tagname">&lt;dt&gt;</td><td class="tagname">&lt;dd&gt;</td></tr>
+    </table>
+    <div class="codebox">&lt;<span class="t">ol</span>&gt;
+  &lt;<span class="t">li</span>&gt;Primeiro passo&lt;/<span class="t">li</span>&gt;
+  &lt;<span class="t">li</span>&gt;Segundo passo&lt;/<span class="t">li</span>&gt;
+&lt;/<span class="t">ol</span>&gt;
+
+&lt;<span class="t">ul</span>&gt;
+  &lt;<span class="t">li</span>&gt;Café&lt;/<span class="t">li</span>&gt;
+  &lt;<span class="t">li</span>&gt;Chá&lt;/<span class="t">li</span>&gt;
+&lt;/<span class="t">ul</span>&gt;
+
+&lt;<span class="t">dl</span>&gt;
+  &lt;<span class="t">dt</span>&gt;HTML&lt;/<span class="t">dt</span>&gt;
+  &lt;<span class="t">dd</span>&gt;Linguagem de marcação para estruturar páginas&lt;/<span class="t">dd</span>&gt;
+&lt;/<span class="t">dl</span>&gt;</div>
+    <p>O símbolo de ordenação (1, 2, 3...) e o bullet visual podem ser alterados via CSS. Também é possível aninhar listas dentro de listas.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="tabelas">
+    <span class="tagmark">&lt;tabelas&gt;</span>
+    <h2>Tabelas: dados organizados em linhas e colunas</h2>
+    <p>Servem para representar dados tabulares — não para montar o layout da página, um uso comum antigamente que prejudica a semântica, o peso da página e a acessibilidade.</p>
+    <table>
+      <tr><th>tag</th><th>função</th></tr>
+      <tr><td class="tagname">&lt;table&gt;</td><td>Container principal da tabela.</td></tr>
+      <tr><td class="tagname">&lt;tr&gt;</td><td>Define uma linha.</td></tr>
+      <tr><td class="tagname">&lt;td&gt;</td><td>Define uma coluna; precisa estar dentro de uma <code class="inline">&lt;tr&gt;</code>.</td></tr>
+      <tr><td class="tagname">&lt;th&gt;</td><td>Coluna de título, com função semântica e estilo próprio.</td></tr>
+      <tr><td class="tagname">&lt;thead&gt;</td><td>Agrupa o cabeçalho da tabela.</td></tr>
+      <tr><td class="tagname">&lt;tfoot&gt;</td><td>Agrupa o rodapé da tabela.</td></tr>
+    </table>
+    <div class="codebox">&lt;<span class="t">table</span>&gt;
+  &lt;<span class="t">thead</span>&gt;
+    &lt;<span class="t">tr</span>&gt;&lt;<span class="t">th</span>&gt;Nome&lt;/<span class="t">th</span>&gt;&lt;<span class="t">th</span>&gt;Idade&lt;/<span class="t">th</span>&gt;&lt;/<span class="t">tr</span>&gt;
+  &lt;/<span class="t">thead</span>&gt;
+  &lt;<span class="t">tr</span>&gt;&lt;<span class="t">td</span>&gt;Ana&lt;/<span class="t">td</span>&gt;&lt;<span class="t">td</span>&gt;28&lt;/<span class="t">td</span>&gt;&lt;/<span class="t">tr</span>&gt;
+&lt;/<span class="t">table</span>&gt;</div>
+    <div class="grid">
+      <div class="card">
+        <span class="name">rowspan</span>
+        <p>Expande uma célula por várias linhas. O valor indica quantas.</p>
+      </div>
+      <div class="card">
+        <span class="name">colspan</span>
+        <p>Expande uma célula por várias colunas. O valor indica quantas.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="midias">
+    <span class="tagmark">&lt;mídias&gt;</span>
+    <h2>Vídeo e áudio direto na página</h2>
+    <p>Com o HTML5, incorporar mídia ficou simples, sem precisar de plugins externos.</p>
+    <div class="codebox">&lt;<span class="t">video</span> <span class="a">src</span>=<span class="s">"apresentacao.mp4"</span> <span class="a">controls</span> <span class="a">loop</span>&gt;&lt;/<span class="t">video</span>&gt;
+
+&lt;<span class="t">audio</span> <span class="a">src</span>=<span class="s">"trilha.mp3"</span> <span class="a">controls</span> <span class="a">autoplay</span>&gt;&lt;/<span class="t">audio</span>&gt;</div>
+    <div class="grid">
+      <div class="card">
+        <span class="name">src</span>
+        <p>Endereço do arquivo — local ou de um site.</p>
+      </div>
+      <div class="card">
+        <span class="name">controls</span>
+        <p>Exibe os controles nativos do navegador (play, pausa, volume).</p>
+      </div>
+      <div class="card">
+        <span class="name">autoplay</span>
+        <p>Inicia a reprodução automaticamente ao carregar a página.</p>
+      </div>
+      <div class="card">
+        <span class="name">loop</span>
+        <p>Repete a reprodução ao chegar ao final.</p>
+      </div>
+    </div>
+    <p>A HTML5 também define <em>media events</em>, que permitem controlar vídeo e áudio via JavaScript.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="formularios">
+    <span class="tagmark">&lt;formulários&gt;</span>
+    <h2>Formulários: a porta de entrada da interação</h2>
+    <p>É como o usuário envia dados para uma página — um cadastro, uma busca, uma reclamação. O formulário tem um container principal e vários campos filhos.</p>
+    <table>
+      <tr><th>tag</th><th>função</th></tr>
+      <tr><td class="tagname">&lt;form&gt;</td><td>Container principal do formulário.</td></tr>
+      <tr><td class="tagname">&lt;input&gt;</td><td>Campo do formulário; o atributo <code class="inline">type</code> define seu comportamento.</td></tr>
+      <tr><td class="tagname">&lt;textarea&gt;</td><td>Campo de texto com múltiplas linhas.</td></tr>
+      <tr><td class="tagname">&lt;select&gt; / &lt;option&gt;</td><td>Campo de seleção; <code class="inline">select</code> é o container, <code class="inline">option</code> são os itens.</td></tr>
+      <tr><td class="tagname">&lt;label&gt;</td><td>Legenda que descreve o campo relacionado.</td></tr>
+      <tr><td class="tagname">&lt;fieldset&gt; / &lt;legend&gt;</td><td>Agrupa campos em seções e dá um título ao grupo.</td></tr>
+    </table>
+    <div class="codebox">&lt;<span class="t">form</span> <span class="a">action</span>=<span class="s">"/enviar"</span> <span class="a">method</span>=<span class="s">"post"</span>&gt;
+  &lt;<span class="t">fieldset</span>&gt;
+    &lt;<span class="t">legend</span>&gt;Contato&lt;/<span class="t">legend</span>&gt;
+    &lt;<span class="t">label</span> <span class="a">for</span>=<span class="s">"email"</span>&gt;E-mail&lt;/<span class="t">label</span>&gt;
+    &lt;<span class="t">input</span> <span class="a">type</span>=<span class="s">"email"</span> <span class="a">id</span>=<span class="s">"email"</span> <span class="a">required</span> <span class="a">placeholder</span>=<span class="s">"voce@email.com"</span>&gt;
+  &lt;/<span class="t">fieldset</span>&gt;
+&lt;/<span class="t">form</span>&gt;</div>
+    <p>O atributo <code class="inline">for</code> em <code class="inline">&lt;label&gt;</code> vincula a legenda ao campo — clicar nela ativa o campo correspondente.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="name">placeholder</span>
+        <p>Dica visual dentro do campo vazio.</p>
+      </div>
+      <div class="card">
+        <span class="name">required</span>
+        <p>Torna o preenchimento obrigatório.</p>
+      </div>
+      <div class="card">
+        <span class="name">autofocus</span>
+        <p>Foca o campo automaticamente ao carregar a página.</p>
+      </div>
+      <div class="card">
+        <span class="name">pattern</span>
+        <p>Valida o valor com uma expressão regular.</p>
+      </div>
+    </div>
+    <p>A HTML5 também trouxe tipos de <code class="inline">input</code> mais específicos: <code class="inline">tel</code>, <code class="inline">date</code>, <code class="inline">datetime</code> e <code class="inline">number</code>, cada um com comportamento e validação próprios do navegador.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="obsoletas">
+    <span class="tagmark">&lt;obsoletas&gt;</span>
+    <h2>Tags que ainda funcionam, mas não deveriam ser usadas</h2>
+    <p>Continuam com suporte em boa parte dos navegadores, mas foram substituídas por alternativas com melhor semântica ou por CSS — e podem perder suporte a qualquer momento.</p>
+    <table>
+      <tr><th>tag</th><th>substituída por</th></tr>
+      <tr class="obsolete-row"><td class="tagname">&lt;applet&gt;</td><td>Incluía applets Java; sem equivalente moderno recomendado.</td></tr>
+      <tr class="obsolete-row"><td class="tagname">&lt;center&gt;</td><td>Propriedade CSS <code class="inline">text-align: center</code>.</td></tr>
+      <tr class="obsolete-row"><td class="tagname">&lt;dir&gt;</td><td>Listas <code class="inline">&lt;ul&gt;</code>/<code class="inline">&lt;ol&gt;</code>.</td></tr>
+      <tr class="obsolete-row"><td class="tagname">&lt;font&gt;</td><td>Propriedades CSS de fonte (<code class="inline">font-family</code>, <code class="inline">color</code>, etc.).</td></tr>
+      <tr class="obsolete-row"><td class="tagname">&lt;image&gt;</td><td>A tag <code class="inline">&lt;img&gt;</code>.</td></tr>
+    </table>
+    <div class="note">Regra prática: se algo pode ser resolvido com CSS, não é trabalho do HTML — a marcação deve descrever conteúdo, não aparência.</div>
+  </section>
+
+  <footer>anotações de estudo · html</footer>
+
+</div>
+</body>
+</html>
